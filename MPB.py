@@ -68,7 +68,6 @@ async def handle_user_message(update: Update, context: ContextTypes.DEFAULT_TYPE
     username = user.username or "NoUsername"
     text = f"📩 New message from @{username} (ID: {user.id}):\n\n{message}"
 
-    # زر Reply مع user_id في callback_data
     keyboard = [
         [InlineKeyboardButton("Reply", callback_data=f"reply_{user.id}")]
     ]
@@ -190,7 +189,7 @@ def main():
     app = ApplicationBuilder().token(TOKEN).build()
 
     if app.job_queue:
-        app.job_queue._scheduler.configure(timezone=pytz.UTC)
+        app.job_queue.scheduler.configure(timezone=pytz.UTC)
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("send", send_message_command))
